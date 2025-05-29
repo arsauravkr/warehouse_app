@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-from src.preprocess import Preprocessor
 from src.model_shap import train_and_explain_with_shap
 
 st.set_page_config(page_title="Warehouse Demand Forecaster", layout="wide")
@@ -27,7 +26,7 @@ if st.button("Train & Explain"):
 
     st.success("✅ Done!")
 
-    # Generate predictions
+    # Predictions
     X = df.drop(columns=["product_wg_ton"])
     X_proc = prep.transform(X)
     preds = model.predict(X_proc)
@@ -38,4 +37,4 @@ if st.button("Train & Explain"):
     st.dataframe(df_out.head(), use_container_width=True)
 
     st.subheader("SHAP Feature Importance")
-    st.image("shap_summary.png", use_column_width=True)
+    st.image("shap_summary.png", use_container_width=True)
