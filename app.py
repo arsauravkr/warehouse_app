@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from src.preprocess import Preprocessor
 from src.model_shap import train_and_explain_with_shap
+from src.preprocess import Preprocessor
 
 st.set_page_config(page_title="Warehouse Demand Forecaster", layout="wide")
 st.title("🚚 Supply Chain Demand Forecaster")
