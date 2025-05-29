@@ -1,0 +1,13 @@
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+# Data files
+data/*.csv
+# Streamlit
+.streamlit/
+# Visualizations
+*.png
+# Jupyter
+.ipynb_checkpoints/
+# Environment
+env/
