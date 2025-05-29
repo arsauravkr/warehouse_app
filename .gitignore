@@ -1,7 +1,7 @@
 # Byte-compiled / optimized
 __pycache__/
 *.py[cod]
-# Data files
+# ignore all CSVs in /data except raw_data.csv
 data/*.csv
 !data/raw_data.csv
 # Streamlit
