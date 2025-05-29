@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 # Data files
 data/*.csv
+!data/raw_data.csv
 # Streamlit
 .streamlit/
 # Visualizations
