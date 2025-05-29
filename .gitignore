@@ -1,9 +1,11 @@
 # Byte-compiled / optimized
 __pycache__/
 *.py[cod]
-# ignore all CSVs in /data except raw_data.csv
+# ignore all CSVs under data/
 data/*.csv
+# but allow raw_data.csv and test_synthetic.csv
 !data/raw_data.csv
+!data/test_data.csv
 # Streamlit
 .streamlit/
 # Visualizations

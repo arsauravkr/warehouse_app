@@ -3,4 +3,4 @@ scikit-learn
 xgboost
 shap
 streamlit
-matplotlib
+matplotlibxgboost
