@@ -20,9 +20,10 @@ def train_and_explain_with_shap(
     """
     # 1) Drop rows with missing target to avoid XGBoost errors
     df = df.dropna(subset=[target_col]).reset_index(drop=True)
-    # 2) Split features/target
+    # 2) Split features/target, ensuring labels are floats
     X = df.drop(columns=[target_col])
-    y = df[target_col]
+    y = df[target_col].astype(float).reset_index(drop=True)
+    # 3) Train/test split
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=test_size, random_state=random_state
     )
