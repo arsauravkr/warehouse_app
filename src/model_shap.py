@@ -9,13 +9,16 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from src.preprocess import Preprocessor
 
 def train_and_explain_with_shap(
-    csv_path="raw_data.csv",
-    target_col="product_wg_ton",
-    test_size=0.2,
-    random_state=42
+    df: pd.DataFrame,
+    target_col: str = "product_wg_ton",
+    test_size: float = 0.2,
+    random_state: int = 42
 ):
-    # 1) Load and split
-    df = pd.read_csv(csv_path)
+    """
+    Train an XGBoost model on df and produce a SHAP summary plot.
+    Expects df already loaded as a DataFrame.
+    """
+    # 1) Split features/target
     X = df.drop(columns=[target_col])
     y = df[target_col]
     X_train, X_test, y_train, y_test = train_test_split(
@@ -50,27 +53,24 @@ def train_and_explain_with_shap(
     print(f"  MSE: {mse:.2f}")
     print(f"  R² : {r2:.4f}")
 
-    # 5) SHAP explanation
-    # Build feature name list: numeric + one-hot feature names
+    # 5) SHAP explanation setup
     num_cols = prep.num_cols
     ohe = prep.preprocessor.named_transformers_['cat'].named_steps['ohe']
-    cat_cols = ohe.get_feature_names_out(prep.cat_cols)
-    feature_names = num_cols + list(cat_cols)
+    cat_cols = ohe.get_feature_names_out(prep.cat_cols).tolist()
+    feature_names = num_cols + cat_cols
 
-    # Convert test set to DataFrame for SHAP
+    # 6) Create SHAP values
     X_test_df = pd.DataFrame(X_test_p, columns=feature_names)
-
-    # Create SHAP explainer and values
-    explainer = shap.TreeExplainer(model)
+    explainer  = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(X_test_df)
 
-    # 6) Summary plot
-    plt.figure(figsize=(12,6))
+    # 7) Summary plot
+    plt.figure(figsize=(12,8))
     shap.summary_plot(shap_values, X_test_df, show=False)
     plt.title("SHAP Feature Importance Summary")
     plt.tight_layout()
     plt.savefig("shap_summary.png")
-    plt.show()
+    plt.close()
 
     return model, prep, explainer
 
