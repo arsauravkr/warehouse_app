@@ -47,8 +47,8 @@ class Preprocessor(BaseEstimator, TransformerMixin):
         ])
         categorical_pipeline = Pipeline([
             ('imputer', SimpleImputer(strategy='constant', fill_value='Missing')),
-            # use sparse_output for newer sklearn
-            ('ohe',     OneHotEncoder(handle_unknown='ignore', sparse_output=False))
+            # correct parameter name for dense output:
+            ('ohe', OneHotEncoder(handle_unknown='ignore', sparse_output=False))
         ])
 
 
