@@ -18,7 +18,9 @@ def train_and_explain_with_shap(
     Train an XGBoost model on df and produce a SHAP summary plot.
     Expects df already loaded as a DataFrame.
     """
-    # 1) Split features/target
+    # 1) Drop rows with missing target to avoid XGBoost errors
+    df = df.dropna(subset=[target_col]).reset_index(drop=True)
+    # 2) Split features/target
     X = df.drop(columns=[target_col])
     y = df[target_col]
     X_train, X_test, y_train, y_test = train_test_split(
